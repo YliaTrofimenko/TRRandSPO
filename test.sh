@@ -6,8 +6,8 @@ echo "Запуск тестов..."
 make
 
 # Тест 1: Проверка обработки пустого ввода
-echo "1 2 3 4 5" | ./my_program > output.txt
-grep "Максимальное значение: 5" output.txt
+echo "3456 2 23 4 -4" | ./my_program > output.txt
+grep "Максимальное значение: 3456" output.txt
 if [ $? -ne 0 ]; then
   echo "Тест 1 не пройден!"
   exit 1

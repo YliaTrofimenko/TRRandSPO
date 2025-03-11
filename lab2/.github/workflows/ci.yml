@@ -49,22 +49,3 @@ jobs:
           name: find_max_package
           path: find_max.deb
 
-  deploy:
-    needs: package
-    runs-on: ubuntu-latest
-    steps:
-      - name: Клонирование репозитория
-        uses: actions/checkout@v3
-
-      - name: Загрузка артефакта (.deb пакета)
-        uses: actions/download-artifact@v3
-        with:
-          name: find_max_package
-          path: .
-
-      - name: Сборка Docker-образа
-        run: docker build -t find_max_app .
-
-      - name: Запуск контейнера
-        run: docker run --rm find_max_app "1 2 3 4 5"
-

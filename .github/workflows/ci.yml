@@ -66,5 +66,5 @@ jobs:
         run: docker build -t find_max_app .
 
       - name: Запуск контейнера
-        run: docker run --rm find_max_app "1 2 3 4 5"
+        run: docker run --rm find_max_app 1 2 3 4 5
 

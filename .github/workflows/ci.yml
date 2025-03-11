@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Клонирование репозитория
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Установка зависимостей
         run: sudo apt update && sudo apt install -y build-essential checkinstall
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Клонирование репозитория
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Установка зависимостей
         run: sudo apt update && sudo apt install -y build-essential checkinstall
@@ -44,7 +44,7 @@ jobs:
         run: mv find-max_1.0-1_amd64.deb find_max.deb
 
       - name: Сохранение артефакта (.deb пакета)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: find_max_package
           path: find_max.deb
@@ -54,10 +54,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Клонирование репозитория
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Загрузка артефакта (.deb пакета)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: find_max_package
           path: .
@@ -65,6 +65,15 @@ jobs:
       - name: Сборка Docker-образа
         run: docker build -t find_max_app .
 
+      - name: Логин в Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Тегирование Docker-образа
+        run: docker tag find_max_app ${{ secrets.DOCKER_USERNAME }}/find_max:latest
+
+      - name: Загрузка в Docker Hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/find_max:latest
+
       - name: Запуск контейнера
-        run: docker run --rm find_max_app 1 2 3 4 5
+        run: docker run --rm ${{ secrets.DOCKER_USERNAME }}/find_max 1 2 3 4 5
 

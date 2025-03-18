@@ -25,6 +25,15 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Установка зависимостей
+        run: sudo apt update && sudo apt install -y build-essential checkinstall
+
+      - name: Сборка ПО
+        run: make
+        
       - name: Запуск тестов
         run: ./test.sh
         

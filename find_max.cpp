@@ -29,6 +29,7 @@ bool isValidNumber(const std::string& str) {
 }
 
 int main(int argc, char* argv[]) {
+  while(true) {
     std::vector<int> arr;
 
     if (argc > 1) { // Если переданы аргументы через командную строку
@@ -63,6 +64,7 @@ int main(int argc, char* argv[]) {
     int max_value = findMax(arr);
     std::cout << "Максимальное значение: " << max_value << std::endl;
     return 0;
+    }
 }
 
 
